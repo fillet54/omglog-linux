@@ -39,9 +39,10 @@ def arrange_commit commit, cols
 end
 
 def on_change &block
-  notifier = INotify::Notifier.new
-  notifier.watch('.git', :recursive, :attrib, :create, :move_self, :close_write) { block.call }
-  notifier.run
+  INotify::Notifier.new.tap do |notifier|
+     notifier.watch('.git', :recursive, :attrib, :create, :move_self, :close_write, &block)
+     notifier.run
+  end
 end
 
 abort("Run omglog at the root of the git repo you'd like to watch.") if (ARGV & %w[-h --help help]).any?
