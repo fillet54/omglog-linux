@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # coding: utf-8
-require 'rb-fsevent'
+require 'rb-inotify'
 
 CLEAR = "\n----\n"
 YELLOW, BLUE, GREY, HIGHLIGHT = '0;33', '0;34', '0;90', '1;30;47'
@@ -39,13 +39,13 @@ def arrange_commit commit, cols
 end
 
 def on_change &block
-  FSEvent.new.tap {|fsevent|
-    fsevent.watch('.git', &block)
-    fsevent.run
-  }
+  notifier = INotify::Notifier.new
+  notifier.watch('.git', :recursive, :attrib, :create, :move_self, :close_write) { block.call }
+  notifier.run
 end
 
 abort("Run omglog at the root of the git repo you'd like to watch.") if (ARGV & %w[-h --help help]).any?
 abort("The current directory doesn't look like the root of a git repo.") unless File.directory?('.git')
 omglog
 on_change { omglog }
+

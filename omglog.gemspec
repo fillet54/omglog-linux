@@ -1,13 +1,13 @@
 Gem::Specification.new do |s|
-  s.name        = 'omglog'
-  s.version     = '0.0.2'
-  s.summary     = "Realtime git logging using fseventsd."
-  s.description = "Realtime git logging using fseventsd. omg!"
-  s.authors     = ["Ben Hoskings"]
-  s.email       = 'ben@hoskings.net'
+  s.name        = 'omglog-linux'
+  s.version     = '0.0.1'
+  s.summary     = "Realtime git logging using inotify."
+  s.description = "Realtime git logging using inotify. omg! This was based on "
+  s.authors     = ["Ben Hoskings", "Phillip Gomez"]
+  s.email       = ['ben@hoskings.net', 'gomez.phillip@gmail.com']
   s.files       = ["bin/omglog"]
   s.executables = ['omglog']
-  s.homepage    = 'http://github.com/benhoskings/omglog'
+  s.homepage    = 'http://github.com/fillet54/omglog-linux'
 
-  s.add_dependency 'rb-fsevent', '~> 0.4.3'
+  s.add_dependency 'rb-inotify', '~> 0.8.8'
 end
